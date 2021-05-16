@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { COLORS } from '../../constants';
+import VisuallyHidden from '../VisuallyHidden';
 
 const SIZES = {
   large: {
@@ -28,7 +29,9 @@ const ProgressBar = ({ value, size }) => {
     aria-valuemin="0"
     aria-valuemax="100"
     style={styles}>
-    <InnerProgressBar percentage={value} />
+    <InnerProgressBar percentage={value}>
+      <VisuallyHidden>{value}%</VisuallyHidden>
+    </InnerProgressBar>
   </BarWrapper>;
 };
 
@@ -41,11 +44,12 @@ const BarWrapper = styled.div`
   border-radius: 8px;
   height: var(--outer-height);
   padding: var(--padding);
+  overflow: hidden;
 `;
 
 const InnerProgressBar = styled.div`
   background-color: ${COLORS.primary};
   height: 100%;
   width: ${(props) => `${props.percentage}%`};
-  border-radius: 4px ${(props) => props.percentage === 100 ? '4px 4px' : "0px 0px"} 4px;
+  border-radius: 4px 0px 0px 4px;
 `;
